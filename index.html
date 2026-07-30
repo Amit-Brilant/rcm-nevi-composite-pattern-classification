@@ -129,8 +129,7 @@
 
   <div class="teaser">
     <figure>
-      <img src="assets/22-segmented-mosaic-1.jpg" alt="Ground truth labels and model predictions rendered side by side on a segmented RCM mosaic">
-      <figcaption>Tile-level predictions painted back onto a whole lesion. Left: labels from the medical team. Right: model output. Green is mesh, blue is ring, grey is background.</figcaption>
+      <img src="assets/poster.png" alt="Project poster summarising background, goals, methods, results and conclusions">
     </figure>
   </div>
 
@@ -249,8 +248,11 @@
   <section>
     <h2>Mosaic-Level Outputs</h2>
     <figure>
-      <img src="assets/23-segmented-mosaic-2.jpg" alt="Ground truth and prediction for a mosaic labelled 98 percent, at 93.25 percent tile accuracy">
-      <figcaption>Ground truth and prediction on a second test mosaic, 93.3% tile accuracy. Where the model drifts it does so at lesion boundaries rather than inventing structure inside the mole.</figcaption>
+      <img src="assets/23-segmented-mosaic-2.jpg" alt="Ground truth and prediction for a mosaic at 93.25 percent tile accuracy">
+    </figure>
+    <figure style="margin-top:18px">
+      <img src="assets/22-segmented-mosaic-1.jpg" alt="Ground truth and prediction for a second mosaic at 89.06 percent tile accuracy">
+      <figcaption>Two test mosaics, ground truth on the left and prediction on the right, at 93.3% and 89.1% tile accuracy. Green is mesh, blue is ring, grey is background. Where the model drifts it does so at lesion boundaries rather than inventing structure inside the mole.</figcaption>
     </figure>
 
     <h3>Irregularity index</h3>
@@ -277,13 +279,6 @@
       <li><b>Tile-level beat pixel-level here</b> not because it is technically superior, but because it matches the unit clinicians label and act on.</li>
       <li><b>The bottleneck is labels, not capacity.</b> Every weak class is a small class.</li>
     </ul>
-  </section>
-
-  <section>
-    <h2>Poster</h2>
-    <figure>
-      <img src="assets/poster.png" alt="Project poster summarising background, goals, methods, results and conclusions">
-    </figure>
   </section>
 
 </div>

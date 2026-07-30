@@ -3,7 +3,7 @@
 B.Sc. final project, **Afeka Tel-Aviv Academic College of Engineering**
 School of Medical Engineering / School of Software Engineering, July 2022
 
-**Students:** [Amit Brilant](https://github.com/Amit-Brilant), [Guy Kabiri](https://github.com/guykabiri)
+**Author:** [Amit Brilant](https://github.com/Amit-Brilant)
 **Supervisor:** Dr. Eyal Katz
 **Co-Supervisor:** Prof. Alon Scope, Sheba Medical Center
 
@@ -294,7 +294,7 @@ rather than tile by tile.
 Labelling is tedious and drifts between annotators. Worse, the team was labelling one tile at a time
 with no view of its surroundings, so tiles were being judged out of context.
 
-We built a desktop tool that overlays the team's own labels onto the full mosaic. They can toggle
+So the project added a desktop tool that overlays the team's own labels onto the full mosaic. They can toggle
 individual classes on and off, adjust overlay opacity and tile size, and see labelling coverage per
 mosaic.
 
@@ -374,8 +374,8 @@ This repository is published as a record of the work, not as a reusable package.
 
 ## Credits
 
-Joint work by **Amit Brilant** and **Guy Kabiri**, supervised by **Dr. Eyal Katz** (Afeka College)
-and **Prof. Alon Scope** (Sheba Medical Center). Thanks to Prof. Scope's research team at Sheba for
+Supervised by **Dr. Eyal Katz** (Afeka Tel-Aviv Academic College of Engineering) and
+**Prof. Alon Scope** (Sheba Medical Center). Thanks to Prof. Scope's research team at Sheba for
 their work on data collection and labelling.
 
 Published as an academic portfolio record. All rights reserved.

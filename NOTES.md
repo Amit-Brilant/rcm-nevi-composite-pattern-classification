@@ -91,8 +91,8 @@ configuration layer:
 | `mosaic_annotator.py:29`, `:265` | dataset root and the legend image |
 | `inference.ipynb` | run directory and dataset roots throughout |
 
-`train.py:414` also hardcodes the Weights & Biases entity (`guykabiri`). Anyone re-running the code
-needs to edit these by hand.
+`train.py:414` also hardcodes a Weights & Biases entity. Anyone re-running the code needs to edit
+these by hand.
 
 ### API drift since 2022
 

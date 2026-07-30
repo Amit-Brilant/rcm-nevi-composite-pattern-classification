@@ -21,7 +21,7 @@ class TilesModel(nn.Module):
             # if 'fc' not in name:
             param.requires_grad = False
 
-        for param in self.model.parameters():
+        for name, param in self.model.named_parameters():
             if 'fc' not in name:
                 assert(param.requires_grad == False)
 

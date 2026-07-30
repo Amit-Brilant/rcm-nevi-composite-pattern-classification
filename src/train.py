@@ -273,7 +273,7 @@ def train_loop(model, loaders, num_epochs, criterion, optimizer, scheduler, run_
 
         metrics_dict = { 'train': {}, 'valid': {}, 'test': {} }
 
-        ground_truth, probability, losses = train_valid_one_epoch(model, loaders, criterion, optimizer, augmentation)
+        ground_truth, probability, losses = train_valid_one_epoch(model, loaders, criterion, optimizer)
         if tta:
             test_ground_truth, test_probability, test_losses = test_time_aug_model(model, loaders['test'], criterion, get_transformer('mid_test'))
         else:

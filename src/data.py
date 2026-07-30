@@ -53,7 +53,7 @@ class TilesData:
             test_paths = [test_paths]
 
         if not isinstance(data_paths, list):
-            test_paths = [data_paths]
+            data_paths = [data_paths]
 
         self.splits_df = pd.DataFrame()
         self.test_paths = test_paths
@@ -134,7 +134,7 @@ class TilesData:
 
             for x, y in zip(x_list, y_list):
                 tile_name = x.split('/')[-1]
-                self.splits_df = self.splits_df.append({ 'phase': 'test', 'x': x, 'y': y, 'tile': tile_name }, ignore_index=True)
+                self.splits_df = self.splits_df.append({ 'phase': phase, 'x': x, 'y': y, 'tile': tile_name }, ignore_index=True)
 
     
         assert(self.splits_df.duplicated(['x']).any() == False)

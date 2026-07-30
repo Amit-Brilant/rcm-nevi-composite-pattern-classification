@@ -67,7 +67,7 @@ def anot_tile(tile_path, classes):
 
     color_map = np.zeros(tile.shape, np.uint8)
 
-    if classes == class_to_id['none']:
+    if classes == 'none':
         return tile, tile
 
     if classes == -1:

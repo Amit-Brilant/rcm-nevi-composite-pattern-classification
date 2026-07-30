@@ -1,7 +1,7 @@
 <h1 align="center">Automated Classification of Reflectance Confocal Microscopy (RCM) Images of Nevi with Composite Patterns using Deep Learning and Computer Vision Algorithms</h1>
 
 <p align="center">
-  <img src="assets/22-segmented-mosaic-1.jpg" alt="Ground truth and model prediction side by side on a segmented RCM mosaic" width="100%">
+  <img src="assets/poster.png" alt="Project poster summarising background, goals, methods, results and conclusions" width="100%">
 </p>
 
 <p align="center">
@@ -11,6 +11,15 @@
   <img src="https://img.shields.io/badge/domain-dermatology%20%2F%20RCM-94D2BD" alt="Dermatology and RCM">
   <img src="https://img.shields.io/badge/weighted%20accuracy-90.7%25-2A9D8F" alt="Weighted accuracy 90.7 percent">
 </p>
+
+---
+
+## About
+
+B.Sc. final project in Medical Engineering at Afeka Tel-Aviv Academic College of Engineering,
+carried out in collaboration with **Sheba Medical Center**, July 2022. The clinical question, the
+data and the definition of success all came from the dermatology research team at Sheba, and the
+project's main design decisions were made jointly with them.
 
 ---
 
@@ -235,6 +244,15 @@ Tile predictions painted back onto the mosaic give the clinician one image of th
   <img src="assets/23-segmented-mosaic-2.jpg" alt="Ground truth and prediction for a mosaic labelled 98 percent, at 93.25 percent accuracy" width="100%">
 </p>
 
+<p align="center">
+  <img src="assets/22-segmented-mosaic-1.jpg" alt="Ground truth and prediction for a second mosaic, at 89.06 percent accuracy" width="100%">
+</p>
+
+Two test mosaics, ground truth on the left and prediction on the right, at 93.3% and 89.1% tile
+accuracy. The shape of the lesion survives intact in both. Where the model drifts it does so at the
+boundaries, extending a `Mesh` field by a tile or two, rather than inventing structure in the middle
+of the mole.
+
 ### Irregularity index
 
 A fully coloured mosaic can still be too much information at once. A second layer flags
@@ -297,18 +315,7 @@ all. [NOTES.md](NOTES.md) documents both, along with what was deliberately left 
 
 ---
 
-## Poster
-
-<p align="center">
-  <img src="assets/poster.png" alt="Project poster" width="100%">
-</p>
-
----
-
 ## Credits
-
-B.Sc. final project, Afeka Tel-Aviv Academic College of Engineering, School of Medical Engineering
-and School of Software Engineering, July 2022. *In collaboration with Sheba Medical Center.*
 
 Supervised by Dr. Eyal Katz (Afeka) and Prof. Alon Scope (Sheba Medical Center). Thanks to
 Prof. Scope's research team for their work on data collection and labelling, and to project partner

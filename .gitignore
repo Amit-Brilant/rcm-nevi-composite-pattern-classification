@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Experiment output
+runs/
+wandb/
+*.pth
+*.ckpt
+
+# Data (patient-derived, never committed)
+data/
+*.bmp
+*.tif
+*.tiff
+
+# OS
+.DS_Store
+Thumbs.db

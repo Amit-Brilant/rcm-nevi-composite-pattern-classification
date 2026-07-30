@@ -376,6 +376,6 @@ This repository is published as a record of the work, not as a reusable package.
 
 Supervised by **Dr. Eyal Katz** (Afeka Tel-Aviv Academic College of Engineering) and
 **Prof. Alon Scope** (Sheba Medical Center). Thanks to Prof. Scope's research team at Sheba for
-their work on data collection and labelling.
+their work on data collection and labelling, and to project partner Guy Kabiri.
 
 Published as an academic portfolio record. All rights reserved.

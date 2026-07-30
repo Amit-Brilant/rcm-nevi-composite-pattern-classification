@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Automated Classification of RCM Images of Nevi with Composite Patterns</title>
+<meta name="description" content="Deep learning for tile-level classification of composite cellular patterns in reflectance confocal microscopy images of nevi. B.Sc. final project, Afeka College, in collaboration with Sheba Medical Center.">
+<style>
+  :root{
+    --ink:#1c1c1e; --muted:#6b7280; --line:#e5e7eb; --bg:#ffffff;
+    --accent:#0f766e; --accent-soft:#f0fdfa; --chip:#363636;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:17px; line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* ---------- header ---------- */
+  header{padding:72px 0 8px; text-align:center; border-bottom:1px solid var(--line)}
+  h1.title{
+    font-size:clamp(1.6rem,3.6vw,2.6rem); line-height:1.22; font-weight:700;
+    letter-spacing:-.02em; margin:0 auto 28px; max-width:940px;
+  }
+  .authors{font-size:1.15rem; margin:0 0 6px}
+  .authors .sup{font-size:.72em; vertical-align:super; color:var(--muted)}
+  .affil{color:var(--muted); font-size:1rem; margin:0 0 4px}
+  .venue{margin:14px 0 0; font-size:.95rem}
+  .venue span{
+    display:inline-block; background:var(--accent-soft); color:var(--accent);
+    border:1px solid #ccfbf1; border-radius:999px; padding:5px 16px; font-weight:600;
+  }
+  .buttons{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin:30px 0 44px}
+  .btn{
+    display:inline-flex; align-items:center; gap:9px; background:var(--chip); color:#fff;
+    border-radius:999px; padding:10px 22px; font-size:.95rem; font-weight:600;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .btn:hover{background:#000; text-decoration:none; transform:translateY(-1px)}
+  .btn svg{width:17px; height:17px; fill:currentColor; flex:none}
+
+  /* ---------- teaser ---------- */
+  .teaser{padding:44px 0 8px}
+  figure{margin:0 0 10px}
+  figure img{width:100%; height:auto; display:block; border-radius:8px}
+  figcaption{
+    color:var(--muted); font-size:.9rem; line-height:1.55; margin-top:12px;
+    max-width:840px; margin-left:auto; margin-right:auto; text-align:center;
+  }
+
+  /* ---------- sections ---------- */
+  section{padding:48px 0; border-top:1px solid var(--line)}
+  section:first-of-type{border-top:none}
+  h2{
+    font-size:1.7rem; font-weight:700; letter-spacing:-.015em;
+    text-align:center; margin:0 0 26px;
+  }
+  h3{font-size:1.12rem; font-weight:700; margin:32px 0 12px; text-align:center; color:var(--ink)}
+  p{margin:0 0 16px}
+  .prose{max-width:820px; margin:0 auto}
+  .prose.justify p{text-align:justify}
+
+  /* ---------- highlights ---------- */
+  .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:18px}
+  .card{border:1px solid var(--line); border-radius:12px; padding:22px 20px; background:#fcfcfd}
+  .card .k{font-size:1.5rem; font-weight:700; color:var(--accent); line-height:1.2; margin-bottom:6px}
+  .card .t{font-weight:650; margin-bottom:6px}
+  .card .d{color:var(--muted); font-size:.92rem; line-height:1.55}
+
+  /* ---------- tables ---------- */
+  .tablewrap{overflow-x:auto; margin:0 auto 8px; max-width:820px}
+  table{border-collapse:collapse; width:100%; font-size:.95rem}
+  th,td{padding:9px 14px; border-bottom:1px solid var(--line); text-align:left}
+  th{font-weight:650; color:var(--muted); font-size:.82rem; text-transform:uppercase; letter-spacing:.04em}
+  td.num,th.num{text-align:right; font-variant-numeric:tabular-nums}
+  tbody tr:last-child td{border-bottom:none}
+  tr.total td{font-weight:700; border-top:2px solid var(--ink)}
+  .win{color:var(--accent); font-weight:700}
+
+  /* ---------- misc ---------- */
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start}
+  ul.clean{max-width:820px; margin:0 auto; padding-left:22px}
+  ul.clean li{margin-bottom:11px}
+  .narrow{max-width:700px; margin-left:auto; margin-right:auto}
+  footer{border-top:1px solid var(--line); padding:36px 0 56px; color:var(--muted); font-size:.9rem}
+  footer .prose{max-width:820px}
+  @media (max-width:720px){
+    body{font-size:16px}
+    header{padding:44px 0 4px}
+    .grid2{grid-template-columns:1fr}
+    section{padding:36px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1 class="title">Automated Classification of Reflectance Confocal Microscopy (RCM) Images of Nevi with Composite Patterns using Deep Learning and Computer Vision Algorithms</h1>
+
+    <p class="authors"><a href="https://github.com/Amit-Brilant">Amit Brilant</a></p>
+    <p class="affil">Afeka Tel-Aviv Academic College of Engineering &nbsp;·&nbsp; Sheba Medical Center</p>
+    <p class="venue"><span>B.Sc. Final Project &nbsp;·&nbsp; July 2022</span></p>
+
+    <div class="buttons">
+      <a class="btn" href="https://github.com/Amit-Brilant/rcm-nevi-composite-pattern-classification">
+        <svg viewBox="0 0 24 24"><path d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.93c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/></svg>
+        Code
+      </a>
+      <a class="btn" href="assets/poster.png">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 16H5V5h14v14zM7 15l2.5-3 1.8 2.2L13.8 11l3.2 4H7z"/></svg>
+        Poster
+      </a>
+      <a class="btn" href="https://github.com/Amit-Brilant/rcm-nevi-composite-pattern-classification#readme">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v2H8v-2zm0 4h8v2H8v-2z"/></svg>
+        Full Write-up
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="teaser">
+    <figure>
+      <img src="assets/22-segmented-mosaic-1.jpg" alt="Ground truth labels and model predictions rendered side by side on a segmented RCM mosaic">
+      <figcaption>Tile-level predictions painted back onto a whole lesion. Left: labels from the medical team. Right: model output. Green is mesh, blue is ring, grey is background.</figcaption>
+    </figure>
+  </div>
+
+  <section>
+    <h2>Highlights</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="k">90.7%</div>
+        <div class="t">Clinically weighted accuracy</div>
+        <div class="d">On 717 held-out tiles. 73.6% under plain top-1, using a metric that scores errors by their clinical severity.</div>
+      </div>
+      <div class="card">
+        <div class="k">8 &rarr; 5</div>
+        <div class="t">Classes merged on clinical grounds</div>
+        <div class="d">Pattern combinations that mean the same thing to a dermatologist were collapsed. The largest single gain in the project.</div>
+      </div>
+      <div class="card">
+        <div class="k">5&times;5</div>
+        <div class="t">Penalty matrix in loss and metric</div>
+        <div class="d">Clinicians scored every possible confusion by severity. That matrix drives both what the model optimises and how it is judged.</div>
+      </div>
+      <div class="card">
+        <div class="k">3,057</div>
+        <div class="t">Labelled tiles, 47% background</div>
+        <div class="d">Small and heavily imbalanced. A custom annotation viewer was built to improve label quality at the source.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Abstract</h2>
+    <div class="prose justify">
+      <p>Reflectance Confocal Microscopy images skin at cellular resolution without cutting it, a "virtual biopsy". One lesion is captured as a <b>mosaic</b> of 35 to 196 <b>tiles</b>, each covering 0.5&nbsp;mm&nbsp;&times;&nbsp;0.5&nbsp;mm. Every tile shows one of three cellular patterns (<b>clod</b>, <b>mesh</b>, <b>ring</b>), a combination of them, or background, and reading those patterns is how a dermatologist assesses a mole.</p>
+      <p>In real nevi the patterns nest inside one another, so a single tile routinely carries two or three at once. These composite patterns are hard for an expert to label consistently, which makes them hard to learn and hard to evaluate. This project, run with the dermatology research team at Sheba Medical Center, trains a ConvNeXt classifier over single tiles and paints its predictions back onto the mosaic to produce a tile-level segmentation of the whole lesion. Two decisions taken jointly with the clinicians shaped the result: eight pattern combinations were merged into five clinically equivalent classes, and a penalty matrix encoding the clinical severity of each confusion was built into both the loss function and the evaluation metric.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>The Problem</h2>
+    <div class="grid2">
+      <figure>
+        <img src="assets/07-pure-patterns.jpg" alt="Clod, mesh and ring pure patterns in RCM tiles">
+        <figcaption>The three pure patterns, plus a background class.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/08-composite-patterns.jpg" alt="Clod-Mesh, Clod-Mesh-Ring and Mesh-Ring composite patterns">
+        <figcaption>What most real tiles actually look like.</figcaption>
+      </figure>
+    </div>
+    <div class="prose justify" style="margin-top:26px">
+      <p>Three patterns plus background give eight possible combinations. Training on all eight produced poor results. Reviewing the confusions with the medical team led to a merge: combinations carrying the same clinical meaning were collapsed into a single class, a grouping drawn from the team's prior published work. Fewer, clinically meaningful classes improved accuracy <i>and</i> turned a predicted mosaic from a confetti of eight colours into something a clinician can read.</p>
+      <p>A second departure from the literature: published work segments RCM mosaics per pixel, but the clinicians asked for per tile. The tile is the unit they label and reason about, so a tile-level map is one they can act on directly.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Method</h2>
+    <figure>
+      <img src="assets/16-pipeline.jpg" alt="Pipeline from RCM acquisition through tile splitting, training, and prediction painted back onto the mosaic">
+    </figure>
+    <div class="prose justify" style="margin-top:24px">
+      <p><b>Backbone.</b> ConvNeXt-Tiny from <code>timm</code>, ImageNet-pretrained and adapted to single-channel 224&nbsp;&times;&nbsp;224 greyscale input. Trained with AdamW under a cosine schedule with warm-up, 100 epochs, batch 32, and aggressive augmentation including unconstrained rotation, since a nevus has no canonical orientation.</p>
+      <p><b>Cost-sensitive loss.</b> Not every mistake costs the same. Confusing <i>mesh</i> with <i>ring</i> is minor; confusing <i>clod</i> with background is not. The clinicians assigned a penalty to every possible confusion, and that matrix is applied on top of a focal loss so the optimiser is pushed away from <i>costly</i> errors rather than merely wrong ones.</p>
+    </div>
+    <figure style="margin-top:26px">
+      <img src="assets/18-cost-sensitive-loss.jpg" alt="Penalty matrix assigning a clinical severity to each pairwise confusion between the five classes">
+      <figcaption>Green is correct, light green a tolerable confusion, red a serious one. The same matrix defines the reported metric.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Results</h2>
+    <div class="prose narrow" style="text-align:center;margin-bottom:22px">
+      <p>Reported scores are clinically weighted: false positives and negatives are scaled by their penalty before precision and recall are computed, then averaged by class support.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>Metric</th><th class="num">Weighted (reported)</th><th class="num">Plain</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Accuracy</td><td class="num win">90.7%</td><td class="num">73.6%</td></tr>
+          <tr><td>Precision</td><td class="num">77.0%</td><td class="num">73.2%</td></tr>
+          <tr><td>Recall</td><td class="num">76.9%</td><td class="num">73.6%</td></tr>
+          <tr><td>F1</td><td class="num">76.7%</td><td class="num">73.0%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Per class, test set (717 tiles)</h3>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>Class</th><th class="num">Support</th><th class="num">Precision</th><th class="num">Recall</th><th class="num">F1</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>None</td><td class="num">334</td><td class="num">88.8%</td><td class="num">90.1%</td><td class="num">89.5%</td></tr>
+          <tr><td>Mesh / Mesh-Ring</td><td class="num">164</td><td class="num">67.5%</td><td class="num">65.9%</td><td class="num">66.7%</td></tr>
+          <tr><td>Ring</td><td class="num">90</td><td class="num">61.0%</td><td class="num">52.2%</td><td class="num">56.3%</td></tr>
+          <tr><td>Clod / Clod-Ring</td><td class="num">86</td><td class="num">53.8%</td><td class="num">73.3%</td><td class="num">62.1%</td></tr>
+          <tr><td>Clod-Mesh / Clod-Mesh-Ring</td><td class="num">43</td><td class="num">37.5%</td><td class="num">20.9%</td><td class="num">26.9%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose justify" style="margin-top:24px">
+      <p>Performance tracks class support almost exactly. The rarest composite class is the weakest by a wide margin, and it is also the hardest one for a human to label. Most of its misses go to <i>clod / clod-ring</i>, a confusion the penalty matrix rates as low severity. The honest read: the model reliably separates lesion from background and is competent on mesh, but it has not solved the composite classes. That needs more labelled composite tiles, not a different architecture.</p>
+    </div>
+
+    <figure style="margin-top:26px">
+      <img src="assets/19-test-confusion-matrix.jpg" alt="Test confusion matrix across the five merged classes" style="max-width:620px;margin:0 auto">
+    </figure>
+  </section>
+
+  <section>
+    <h2>Mosaic-Level Outputs</h2>
+    <figure>
+      <img src="assets/23-segmented-mosaic-2.jpg" alt="Ground truth and prediction for a mosaic labelled 98 percent, at 93.25 percent tile accuracy">
+      <figcaption>Ground truth and prediction on a second test mosaic, 93.3% tile accuracy. Where the model drifts it does so at lesion boundaries rather than inventing structure inside the mole.</figcaption>
+    </figure>
+
+    <h3>Irregularity index</h3>
+    <div class="prose justify">
+      <p>A fully coloured mosaic can still be too much information at once. A second layer flags disagreement between neighbours: a 3&nbsp;&times;&nbsp;3 window slides across the mosaic, and where the nine tiles carry three or more distinct predictions, the centre tile is circled in red. Heterogeneous, asymmetric regions are exactly what clinicians are trained to treat as suspicious, so this reduces a wall of colour to a short list of places to look.</p>
+    </div>
+    <div class="grid2" style="margin-top:18px">
+      <figure>
+        <img src="assets/20-mosaic-prediction.jpg" alt="Predicted mosaic with class colours">
+        <figcaption>Prediction</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/21-mosaic-irregularities.jpg" alt="The same mosaic with irregularity regions circled in red">
+        <figcaption>Irregularities</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>Takeaways</h2>
+    <ul class="clean">
+      <li><b>Clinical reasoning beat validation curves.</b> The eight-to-five merge was proposed on clinical grounds and improved the model as a side effect. The largest single gain came from a domain decision, not an architectural one.</li>
+      <li><b>The metric is part of the model.</b> Encoding error severity into both loss and evaluation changed what the network optimised for. A flat accuracy score would have hidden that most remaining errors are the tolerable kind.</li>
+      <li><b>Tile-level beat pixel-level here</b> not because it is technically superior, but because it matches the unit clinicians label and act on.</li>
+      <li><b>The bottleneck is labels, not capacity.</b> Every weak class is a small class.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Poster</h2>
+    <figure>
+      <img src="assets/poster.png" alt="Project poster summarising background, goals, methods, results and conclusions">
+    </figure>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="prose">
+      <p><b>Acknowledgements.</b> Supervised by Dr. Eyal Katz (Afeka Tel-Aviv Academic College of Engineering) and Prof. Alon Scope (Sheba Medical Center). Thanks to Prof. Scope's research team for their work on data collection and labelling, and to project partner Guy Kabiri.</p>
+      <p>The dataset is patient-derived clinical data and is not publicly available. Published as an academic portfolio record. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
